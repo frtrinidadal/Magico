@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Capítulo Final — ¿Escribimos esta noche?</title>
+  <link rel="stylesheet" href="estilo.css" />
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+</head>
+<body>
+
+  <div class="subtitulo-superior">✧ Travesía en el parque de las aguas ✧</div>
+
+  <main class="libro-abierto">
+    
+    <!-- LADO IZQUIERDO: FOTO FINAL -->
+    <section class="hoja-izquierda">
+      <div class="marco-brillante">
+        <div class="contenedor-img">
+          <img src="foto4.jpg" alt="Circuito Mágico de Noche" />
+        </div>
+      </div>
+      <div class="pie-foto">Fig. 4 — Una noche para recordar</div>
+    </section>
+
+    <!-- LADO DERECHO: LA PROPUESTA -->
+    <!-- LADO DERECHO: LA PROPUESTA -->
+    <section class="hoja-derecha">
+
+      <!-- 1. CAJA DE LA PREGUNTA (VISIBLE AL INICIO) -->
+      <article id="cajaPregunta">
+        <div class="etiqueta-cap">Capítulo Final · La Pregunta</div>
+        <h2>¿Escribimos esta noche? 🌙✨</h2>
+        <p class="cuerpo">
+          ¿Aceptas ir este fin de semana a recorrer el Circuito Mágico del Agua?
+        </p>
+
+        <div class="caja-botones">
+          <button class="btn-si" id="btnSi" onclick="aceptarInvitacion()">¡Acepto el paseo! ⛲✨</button>
+          <button class="btn-no" id="btnNo" onmouseover="escaparBoton()" ontouchstart="escaparBoton(event)">
+            Paso... 🙈
+          </button>
+        </div>
+        <div class="texto-pique" id="textoAlerta"></div>
+      </article>
+
+      <!-- 2. CAJA DE ÉXITO (TOTALMENTE OCULTA AL INICIO CON style="display:none;") -->
+      <article class="caja-exito" id="cajaExito" style="display: none;">
+        <div class="etiqueta-cap">Epílogo · Confirmado</div>
+        <h2>¡Plan Agendado! 🎉</h2>
+        <p class="cuerpo">
+          El paseo nocturno entre luces y fuentes está sellado. Coordinemos la hora y los detalles.
+        </p>
+        <a href="https://wa.me/51910318539?text=¡Hola!%20He%20leído%20todo%20el%20libro%20y%20acepto%20la%20invitación%20al%20Circuito%20Mágico%20del%20Agua%20⛲✨%20¿A%20qué%20hora%20nos%20encontramos?" 
+           class="btn-wsp" target="_blank">
+          Coordinar por WhatsApp 📲
+        </a>
+      </article>
+
+      <footer class="barra-inferior">
+        <a href="pagina4.html" class="btn-nav">◀ Anterior</a>
+        <span class="contador-hojas">Pág. 4 de 4</span>
+        <span></span>
+      </footer>
+
+    </section>
+
+  </main>
+
+  <!-- Lógica interactiva exclusiva de la página final -->
+  <script>
+    const btnSi = document.getElementById('btnSi');
+    const btnNo = document.getElementById('btnNo');
+    const textoAlerta = document.getElementById('textoAlerta');
+    const cajaPregunta = document.getElementById('cajaPregunta');
+    const cajaExito = document.getElementById('cajaExito');
+
+    let escalaSi = 1;
+    let intentos = 0;
+    const advertencias = [
+      "¡Uy, casi! El chorro de agua fue más rápido 😜",
+      "Esta página brilla demasiado para rechazarla ✨",
+      "Ese botón no tiene batería... 😂",
+      "El botón azul iluminado es el correcto 👆"
+    ];
+
+    function escaparBoton(e) {
+      if (e) e.preventDefault();
+
+      textoAlerta.textContent = advertencias[intentos % advertencias.length];
+      intentos++;
+
+      escalaSi += 0.12;
+      btnSi.style.transform = `scale(${escalaSi})`;
+
+      btnNo.style.position = 'fixed';
+      const padding = 25;
+      const maxX = window.innerWidth - btnNo.offsetWidth - padding;
+      const maxY = window.innerHeight - btnNo.offsetHeight - padding;
+
+      const randX = Math.max(padding, Math.floor(Math.random() * maxX));
+      const randY = Math.max(padding, Math.floor(Math.random() * maxY));
+
+      btnNo.style.left = `${randX}px`;
+      btnNo.style.top = `${randY}px`;
+    }
+
+    function aceptarInvitacion() {
+      // Ocultar la pregunta y el botón que se escapa
+      cajaPregunta.style.setProperty('display', 'none', 'important');
+      btnNo.style.display = 'none';
+
+      // Mostrar la confirmación y WhatsApp
+      cajaExito.style.setProperty('display', 'flex', 'important');
+
+      // Disparar confeti
+      confetti({
+        particleCount: 140,
+        spread: 85,
+        colors: ['#38bdf8', '#f59e0b', '#ffffff', '#0284c7'],
+        origin: { y: 0.6 }
+      });
+    }
+  </script>
+    <script src="luces.js"></script>
+</body>
+</html>
